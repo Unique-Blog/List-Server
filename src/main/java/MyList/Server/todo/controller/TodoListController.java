@@ -43,8 +43,7 @@ public class TodoListController {
     }
 
     @RequestMapping(value = "/todo/deleteAll",method = RequestMethod.PATCH)
-    public ResponseEntity<List<TodoList>> deleteAllTodo(@RequestBody Long id,
-                                                     @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+    public ResponseEntity<List<TodoList>> deleteAllTodo(@AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         todoListService.deleteAll();
         List<TodoList> allListTodo = todoListService.searchAll(memberPrincipal.getMember().getUserId());
         return ResponseEntity.ok(allListTodo);
