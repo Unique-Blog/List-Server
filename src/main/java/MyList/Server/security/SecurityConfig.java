@@ -31,7 +31,7 @@ public class SecurityConfig {
         http
                 .cors()
                 .and()
-                .csrf().disable()
+//                .csrf().disable()
 
                 .authorizeRequests()
                 .anyRequest().permitAll();
