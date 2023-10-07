@@ -21,7 +21,7 @@ public class BucketListService {
     public BucketList add(BucketListRequestDTO bucketListRequestDTO){
         BucketList bucketList = BucketList.builder()
                 .content(bucketListRequestDTO.getContent())
-                .completed(bucketListRequestDTO.isCompleted())
+                .completed(bucketListRequestDTO.getCompleted())
                 .userId(bucketListRequestDTO.getUserId())
                 .build();
         return this.bucketListRepository.save(bucketList);
@@ -35,11 +35,14 @@ public class BucketListService {
         return this.bucketListRepository.findAllByUserId(memberId);
     }
     public BucketList updateById(BucketListResponseDTO bucketListResponseDTO){
-        BucketList todoEntity = this.searchById(bucketListResponseDTO.getId());
+        BucketList bucketList = this.searchById(bucketListResponseDTO.getId());
         if(bucketListResponseDTO.getContent() != null){
-            todoEntity.setContent(bucketListResponseDTO.getContent());
+            bucketList.setContent(bucketListResponseDTO.getContent());
         }
-        return this.bucketListRepository.save(todoEntity);
+        if(bucketListResponseDTO.getCompleted() != null){
+            bucketList.setCompleted(bucketListResponseDTO.getCompleted());
+        }
+        return this.bucketListRepository.save(bucketList);
     }
     public void deleteById(Long id){
         this.bucketListRepository.deleteById(id);

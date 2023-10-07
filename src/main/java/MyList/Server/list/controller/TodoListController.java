@@ -1,5 +1,6 @@
 package MyList.Server.list.controller;
 
+import MyList.Server.list.dto.response.TodoListResponseDTO;
 import MyList.Server.login.dto.MemberPrincipal;
 import MyList.Server.list.dto.request.TodoListRequestDTO;
 import MyList.Server.list.entity.TodoList;
@@ -33,26 +34,24 @@ public class TodoListController {
         return ResponseEntity.ok(allListTodo);
     }
 
-    @RequestMapping(value = "/todo/update",method = RequestMethod.PATCH)
-    public ResponseEntity<List<TodoList>> updateTodo(@RequestBody Long id, TodoListRequestDTO todoListRequestDTO,
-                                                     @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        todoListService.updateById(id, todoListRequestDTO);
-        List<TodoList> allListTodo = todoListService.searchAll(memberPrincipal.getMember().getUserId());
+    @RequestMapping(value = "/todo/update",method = RequestMethod.POST)
+    public ResponseEntity<List<TodoList>> updateTodo(@RequestBody TodoListResponseDTO todoListResponseDTO) {
+        todoListService.updateById(todoListResponseDTO);
+        List<TodoList> allListTodo = todoListService.searchAll(todoListResponseDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }
 
     @RequestMapping(value = "/todo/delete",method = RequestMethod.DELETE)
-    public ResponseEntity<List<TodoList>> deleteTodo(@RequestBody Long id,
-                                                     @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
-        todoListService.deleteById(id);
-        List<TodoList> allListTodo = todoListService.searchAll(memberPrincipal.getMember().getUserId());
+    public ResponseEntity<List<TodoList>> deleteTodo(@RequestBody TodoListResponseDTO todoListResponseDTO) {
+        todoListService.deleteById(todoListResponseDTO.getId());
+        List<TodoList> allListTodo = todoListService.searchAll(todoListResponseDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }
 
     @RequestMapping(value = "/todo/deleteAll",method = RequestMethod.DELETE)
-    public ResponseEntity<List<TodoList>> deleteAllTodo(@AuthenticationPrincipal MemberPrincipal memberPrincipal) {
+    public ResponseEntity<List<TodoList>> deleteAllTodo(@RequestBody TodoListResponseDTO todoListResponseDTO) {
         todoListService.deleteAll();
-        List<TodoList> allListTodo = todoListService.searchAll(memberPrincipal.getMember().getUserId());
+        List<TodoList> allListTodo = todoListService.searchAll(todoListResponseDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }
 

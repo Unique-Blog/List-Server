@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TodoListRequestDTO {
     private String content;
-    private boolean completed;
+    private Boolean completed;
     private String userId;
 }

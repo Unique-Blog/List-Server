@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BucketListRequestDTO {
     private String content;
-    private boolean completed;
+    private Boolean completed;
     private String userId;
 }

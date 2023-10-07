@@ -1,6 +1,7 @@
 package MyList.Server.list.service;
 
 import MyList.Server.list.dto.request.TodoListRequestDTO;
+import MyList.Server.list.dto.response.TodoListResponseDTO;
 import MyList.Server.list.entity.TodoList;
 import MyList.Server.list.repository.TodoListRepository;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class TodoListService {
         public TodoList add(TodoListRequestDTO todoListRequestDTO){
             TodoList todoList = TodoList.builder()
                     .content(todoListRequestDTO.getContent())
-                    .completed(todoListRequestDTO.isCompleted())
+                    .completed(todoListRequestDTO.getCompleted())
                     .userId(todoListRequestDTO.getUserId())
                     .build();
             return this.todoListRepository.save(todoList);
@@ -34,10 +35,13 @@ public class TodoListService {
         public List<TodoList> searchAll(String memberId){
             return this.todoListRepository.findAllByUserId(memberId);
         }
-        public TodoList updateById(Long id, TodoListRequestDTO request){
-            TodoList todoEntity = this.searchById(id);
-            if(request.getContent() != null){
-                todoEntity.setContent(request.getContent());
+        public TodoList updateById(TodoListResponseDTO todoListResponseDTO){
+            TodoList todoEntity = this.searchById(todoListResponseDTO.getId());
+            if(todoListResponseDTO.getContent() != null){
+                todoEntity.setContent(todoListResponseDTO.getContent());
+            }
+            if(todoListResponseDTO.getCompleted() != null){
+                todoEntity.setCompleted(todoListResponseDTO.getCompleted());
             }
             return this.todoListRepository.save(todoEntity);
         }

@@ -11,10 +11,7 @@ import MyList.Server.login.dto.MemberPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,14 +35,14 @@ public class BucketListController {
         return ResponseEntity.ok(allListTodo);
     }
 
-    @RequestMapping(value = "/bucket/update",method = RequestMethod.PATCH)
+    @RequestMapping(value = "/bucket/update/",method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> updateBucket(@RequestBody BucketListResponseDTO bucketListResponseDTO) {
         bucketListService.updateById(bucketListResponseDTO);
         List<BucketList> allListTodo = bucketListService.searchAll(bucketListResponseDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }
 
-    @RequestMapping(value = "/bucket/delete",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/bucket/delete/",method = RequestMethod.DELETE)
     public ResponseEntity<List<BucketList>> deleteBucket(@RequestBody BucketListResponseDTO bucketListResponseDTO) {
         bucketListService.deleteById(bucketListResponseDTO.getId());
         List<BucketList> allListTodo = bucketListService.searchAll(bucketListResponseDTO.getUserId());
