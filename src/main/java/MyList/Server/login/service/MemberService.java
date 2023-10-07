@@ -1,7 +1,7 @@
 package MyList.Server.login.service;
 
 import MyList.Server.login.dto.SignupRequestDTO;
-import MyList.Server.login.entity.User;
+import MyList.Server.login.entity.Member;
 import MyList.Server.login.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +18,10 @@ public class MemberService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public User userSignup(SignupRequestDTO signupRequestDTO){
-        User user = signupRequestDTO.of();
-        memberRepository.save(user);
-        return user;
+    public Member userSignup(SignupRequestDTO signupRequestDTO){
+        Member member = signupRequestDTO.of();
+        memberRepository.save(member);
+        return member;
     }
 
     @Override

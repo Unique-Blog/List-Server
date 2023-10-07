@@ -1,6 +1,6 @@
 package MyList.Server.todo.entity;
 
-import MyList.Server.login.entity.User;
+import MyList.Server.login.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +22,7 @@ public class TodoList {
     private int complete;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private User user;
+    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    private Member member;
 
 }
