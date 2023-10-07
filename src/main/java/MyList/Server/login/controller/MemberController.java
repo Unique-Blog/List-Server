@@ -1,6 +1,6 @@
 package MyList.Server.login.controller;
 
-import MyList.Server.login.dto.UserDTO;
+import MyList.Server.login.dto.SignupRequestDTO;
 import MyList.Server.login.service.MemberService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +20,16 @@ public class MemberController {
     }
 
     @PostMapping("/user/signup")
-    public String signup(@RequestBody UserDTO userDTO){
-        String rawPassword = userDTO.getUserPw();
+    public String signup(@RequestBody SignupRequestDTO signupRequestDTO){
+        String rawPassword = signupRequestDTO.getUserPw();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        userDTO.setUserPw(encPassword);
-        memberService.signup(userDTO);
+        signupRequestDTO.setUserPw(encPassword);
+        memberService.userSignup(signupRequestDTO);
         return "redirect:/";
+    }
+
+    @GetMapping("/home")
+    public String MainPage(){
+        return "/home";
     }
 }

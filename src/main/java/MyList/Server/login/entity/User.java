@@ -1,5 +1,6 @@
 package MyList.Server.login.entity;
 
+import MyList.Server.todo.entity.TodoList;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "member")
 public class User implements UserDetails {
 
     @Id
@@ -28,8 +30,8 @@ public class User implements UserDetails {
     private String userId;
     @Column
     private String userPw;
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-//    private List<TodoList> todoLists = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<TodoList> todoLists = new ArrayList<>();
 
 
 
@@ -42,13 +44,13 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return userPw;
     }
 
     @Override
     public String getUsername() {
-        return null;
-    }
+        return userId;
+    }   //userId 반환
 
     @Override
     public boolean isAccountNonExpired() {
