@@ -1,5 +1,6 @@
 package MyList.Server.login.controller;
 
+import MyList.Server.login.dto.LoginDTO;
 import MyList.Server.login.dto.SignupRequestDTO;
 import MyList.Server.login.entity.Member;
 import MyList.Server.login.service.MemberService;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -27,13 +28,13 @@ public class MemberController {
     @Autowired
     private PrincipalDetailsService principalDetailsService;
 
-    @GetMapping({"", "/"})
+    @GetMapping({"hello"})
     public String getIndex(){
         String anyContext = "제발 제발 제발";
         return anyContext;
     }
 
-    @PostMapping("/user/signup")
+    @RequestMapping(value = "/user/signup", method = RequestMethod.POST)
     public ResponseEntity<String> signup(@RequestBody SignupRequestDTO signupRequestDTO){
         String rawPassword = signupRequestDTO.getUserPw();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
@@ -43,8 +44,8 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ResponseEntity<String> loginForm(@RequestBody Member member){
-        principalDetailsService.loadUserByUsername(member.getUserId());
+    public ResponseEntity<String> loginForm(@RequestBody LoginDTO loginDTO){
+        principalDetailsService.loadUserByUsername(loginDTO.getUserId());
         return ResponseEntity.ok("로그인성공");
     }
 }

@@ -18,6 +18,7 @@ public class SignupRequestDTO {
                 .userId(userId)
                 .userName(userName)
                 .userPw(userPw)
+                .role("ROLE_USER")
                 .build();
     }
 }
