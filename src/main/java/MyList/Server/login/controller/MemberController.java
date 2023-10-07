@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
@@ -35,10 +37,10 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ResponseEntity<String> loginForm(@RequestBody LoginDTO loginDTO){
+    public ResponseEntity<LoginDTO> loginForm(@RequestBody LoginDTO loginDTO, HttpSession session){
         if (memberService.login(loginDTO)){
-            return ResponseEntity.ok("로그인 성공");
+            return ResponseEntity.ok(loginDTO);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginDTO);
     }
 }

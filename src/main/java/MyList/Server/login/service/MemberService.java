@@ -34,7 +34,7 @@ public class MemberService{
         }
     }
 
-    public boolean login(LoginDTO loginDTO){
+    public Boolean login(LoginDTO loginDTO){
         Optional<Member> memberId = memberRepository.findByUserId(loginDTO.getUserId());
         if(memberId.isPresent()){
             Member member = memberId.get();
