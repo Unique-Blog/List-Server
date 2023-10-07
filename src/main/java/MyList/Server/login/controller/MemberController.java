@@ -42,7 +42,7 @@ public class MemberController {
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
 
-    @GetMapping("/user/login")
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public ResponseEntity<String> loginForm(@RequestBody Member member){
         principalDetailsService.loadUserByUsername(member.getUserId());
         return ResponseEntity.ok("로그인성공");
