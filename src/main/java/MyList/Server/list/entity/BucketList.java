@@ -1,17 +1,18 @@
-package MyList.Server.todo.entity;
+package MyList.Server.list.entity;
 
-import MyList.Server.login.entity.Member;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 @Builder
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TodoList {
+public class BucketList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +23,4 @@ public class TodoList {
     private Boolean completed;
     @Column(name = "user_id")
     private String userId;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", referencedColumnName = "userId")
-//    private Member member;
-
 }

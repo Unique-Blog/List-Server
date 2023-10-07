@@ -1,15 +1,15 @@
-package MyList.Server.todo.dto.response;
+package MyList.Server.list.dto.request;
 
-import MyList.Server.todo.entity.TodoList;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class TodoListResponseDTO {
+@AllArgsConstructor
+public class TodoListRequestDTO {
     private String content;
     private boolean completed;
-
+    private String userId;
 }

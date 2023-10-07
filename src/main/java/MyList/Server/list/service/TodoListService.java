@@ -1,8 +1,8 @@
-package MyList.Server.todo.service;
+package MyList.Server.list.service;
 
-import MyList.Server.todo.dto.request.TodoListRequestDTO;
-import MyList.Server.todo.entity.TodoList;
-import MyList.Server.todo.repository.TodoListRepository;
+import MyList.Server.list.dto.request.TodoListRequestDTO;
+import MyList.Server.list.entity.TodoList;
+import MyList.Server.list.repository.TodoListRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

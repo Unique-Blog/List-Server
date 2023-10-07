@@ -1,6 +1,6 @@
-package MyList.Server.todo.repository;
+package MyList.Server.list.repository;
 
-import MyList.Server.todo.entity.TodoList;
+import MyList.Server.list.entity.TodoList;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

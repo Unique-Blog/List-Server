@@ -1,7 +1,7 @@
-package MyList.Server.todo.service;
+package MyList.Server.list.service;
 
-import MyList.Server.todo.entity.TodoList;
-import MyList.Server.todo.repository.TodoListRepository;
+import MyList.Server.list.entity.TodoList;
+import MyList.Server.list.repository.TodoListRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,10 +1,9 @@
-package MyList.Server.todo.controller;
+package MyList.Server.list.controller;
 
 import MyList.Server.login.dto.MemberPrincipal;
-import MyList.Server.login.entity.Member;
-import MyList.Server.todo.dto.request.TodoListRequestDTO;
-import MyList.Server.todo.entity.TodoList;
-import MyList.Server.todo.service.TodoListService;
+import MyList.Server.list.dto.request.TodoListRequestDTO;
+import MyList.Server.list.entity.TodoList;
+import MyList.Server.list.service.TodoListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

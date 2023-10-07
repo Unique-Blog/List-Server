@@ -1,6 +1,5 @@
 package MyList.Server.login.entity;
 
-import MyList.Server.todo.entity.TodoList;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
