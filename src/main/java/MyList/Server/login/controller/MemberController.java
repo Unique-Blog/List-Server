@@ -4,11 +4,10 @@ import MyList.Server.login.dto.LoginDTO;
 import MyList.Server.login.dto.SignupRequestDTO;
 import MyList.Server.login.entity.Member;
 import MyList.Server.login.service.MemberService;
-import MyList.Server.security.auth.PrincipalDetails;
-import MyList.Server.security.auth.PrincipalDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,17 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MemberController {
 
-    @Autowired
-    private MemberService memberService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    private PrincipalDetailsService principalDetailsService;
+    private final MemberService memberService;
 
     @GetMapping({"hello"})
     public String getIndex(){
@@ -35,17 +29,16 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/user/signup", method = RequestMethod.POST)
-    public ResponseEntity<String> signup(@RequestBody SignupRequestDTO signupRequestDTO){
-        String rawPassword = signupRequestDTO.getUserPw();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        signupRequestDTO.setUserPw(encPassword);
+    public ResponseEntity<SignupRequestDTO> signup(@RequestBody SignupRequestDTO signupRequestDTO){
         memberService.userSignup(signupRequestDTO);
-        return ResponseEntity.ok("회원가입이 완료되었습니다.");
+        return ResponseEntity.ok(signupRequestDTO);
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     public ResponseEntity<String> loginForm(@RequestBody LoginDTO loginDTO){
-        principalDetailsService.loadUserByUsername(loginDTO.getUserId());
-        return ResponseEntity.ok("로그인성공");
+        if (memberService.login(loginDTO)){
+            return ResponseEntity.ok("로그인 성공");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
     }
 }

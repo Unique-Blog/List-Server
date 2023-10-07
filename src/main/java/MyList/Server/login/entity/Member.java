@@ -25,8 +25,6 @@ public class Member {
     private String userName;
     @Column
     private String userPw;
-    @Column
-    private String role = "ROLE_USER";
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TodoList> todoLists = new ArrayList<>();
 
