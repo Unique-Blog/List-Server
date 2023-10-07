@@ -5,6 +5,10 @@ import MyList.Server.login.dto.SignupRequestDTO;
 import MyList.Server.login.entity.Member;
 import MyList.Server.login.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,18 +16,21 @@ import java.util.Optional;
 
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
-public class MemberService{
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
+
     @Transactional
     public Member userSignup(SignupRequestDTO signupRequestDTO){
-        checkDuplication(signupRequestDTO.of());
         Member member = signupRequestDTO.of();
+        checkDuplication(signupRequestDTO.of());
+        memberRepository.save(member);
+
         System.out.println("회원가입");
         System.out.println("member = " + member);
-        memberRepository.save(member);
         return member;
     }
 
@@ -34,14 +41,21 @@ public class MemberService{
         }
     }
 
-    public Boolean login(LoginDTO loginDTO){
+    public Member login(LoginDTO loginDTO){
+        System.out.println("loginDTO = " + loginDTO.getUserId());
         Optional<Member> memberId = memberRepository.findByUserId(loginDTO.getUserId());
         if(memberId.isPresent()){
             Member member = memberId.get();
-            return member.getUserPw().equals(loginDTO.getPassword());
+            if(member.getUserPw().equals(loginDTO.getPassword()))
+                return member;
         }
-        return false;
+        return null;
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return memberRepository.findByUserId(username)
+                .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+    }
 }

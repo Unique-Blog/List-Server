@@ -34,7 +34,7 @@ public class TodoListController {
         return ResponseEntity.ok(allListTodo);
     }
 
-    @RequestMapping(value = "/todo/delete",method = RequestMethod.PATCH)
+    @RequestMapping(value = "/todo/delete",method = RequestMethod.DELETE)
     public ResponseEntity<List<TodoList>> deleteTodo(@RequestBody Long id,
                                                      @AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         todoListService.deleteById(id);
@@ -42,7 +42,7 @@ public class TodoListController {
         return ResponseEntity.ok(allListTodo);
     }
 
-    @RequestMapping(value = "/todo/deleteAll",method = RequestMethod.PATCH)
+    @RequestMapping(value = "/todo/deleteAll",method = RequestMethod.DELETE)
     public ResponseEntity<List<TodoList>> deleteAllTodo(@AuthenticationPrincipal MemberPrincipal memberPrincipal) {
         todoListService.deleteAll();
         List<TodoList> allListTodo = todoListService.searchAll(memberPrincipal.getMember().getUserId());

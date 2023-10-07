@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,10 +38,14 @@ public class MemberController {
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ResponseEntity<LoginDTO> loginForm(@RequestBody LoginDTO loginDTO, HttpSession session){
-        if (memberService.login(loginDTO)){
-            return ResponseEntity.ok(loginDTO);
+    public ResponseEntity<Member> loginForm(@RequestBody LoginDTO loginDTO){
+        System.out.println("loginDTO = " + loginDTO);
+        Member member = memberService.login(loginDTO);
+        if (member != null){
+            return ResponseEntity.ok(member);
+        }else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(null);
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginDTO);
     }
 }
