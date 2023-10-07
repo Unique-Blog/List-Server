@@ -1,7 +1,7 @@
 package MyList.Server.login.dto;
 
 
-import MyList.Server.login.entity.User;
+import MyList.Server.login.entity.Member;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,8 +13,8 @@ public class SignupRequestDTO {
     private String userId;
     private String userPw;
 
-    public User of(){
-        return User.builder()
+    public Member of(){
+        return Member.builder()
                 .userId(userId)
                 .userName(userName)
                 .userPw(userPw)

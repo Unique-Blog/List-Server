@@ -34,16 +34,16 @@ public class SecurityConfig {
                 .csrf().disable()
 
                 .authorizeRequests()
-                .antMatchers("/login", "/hello").permitAll()
+                .antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/home")
+                .loginPage("/user/login")
+                .defaultSuccessUrl("/")
                 .usernameParameter("userId")
                 .passwordParameter("password")
-                .loginProcessingUrl("/loginProc")
+                .loginProcessingUrl("/login")
                 .successHandler(new AuthenticationSuccessHandler() {
                                     @Override
                                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -64,9 +64,8 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .logoutUrl("/doLogout")
-                .logoutSuccessUrl("login")
+                .logoutSuccessUrl("/login");
 
-                .and().build();
 
         return http.build();
     }
