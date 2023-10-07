@@ -43,24 +43,8 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
                 .usernameParameter("userId")
                 .passwordParameter("password")
-                .loginProcessingUrl("/login")
-                .successHandler(new AuthenticationSuccessHandler() {
-                                    @Override
-                                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                        System.out.println("authentication : " + authentication.getName());
-                                        response.sendRedirect("/home"); // 인증이 성공한 후에는 root로 이동
-                                    }
-                                }
-                    )
-                .failureHandler(new AuthenticationFailureHandler() {
-                                @Override
-                                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                                        System.out.println("exception : " + exception.getMessage());
-                                        response.sendRedirect("/login");
-                                    }
-                                }
-                    )
-                .permitAll()
+                .loginProcessingUrl("/user/login")
+
                 .and()
                 .logout()
                 .logoutUrl("/doLogout")
