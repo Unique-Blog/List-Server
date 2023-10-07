@@ -22,6 +22,7 @@ public class TodoListService {
             TodoList todoList = TodoList.builder()
                     .content(todoListRequestDTO.getContent())
                     .completed(todoListRequestDTO.isCompleted())
+                    .userId(todoListRequestDTO.getUserId())
                     .build();
             return this.todoListRepository.save(todoList);
         }
@@ -31,7 +32,7 @@ public class TodoListService {
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         }
         public List<TodoList> searchAll(String memberId){
-            return this.todoListRepository.findAllByMember_UserId(memberId);
+            return this.todoListRepository.findAllByUserId(memberId);
         }
         public TodoList updateById(Long id, TodoListRequestDTO request){
             TodoList todoEntity = this.searchById(id);

@@ -22,11 +22,9 @@ public class Member implements UserDetails {
     @Id
     private String userId;
     @Column
-    private String userName;
-    @Column
     private String userPw;
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TodoList> todoLists = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<TodoList> todoLists = new ArrayList<>();
 
 
     @Override

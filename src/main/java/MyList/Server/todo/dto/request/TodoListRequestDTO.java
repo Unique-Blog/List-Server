@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class TodoListRequestDTO {
     private String content;
     private boolean completed;
+    private String userId;
 }

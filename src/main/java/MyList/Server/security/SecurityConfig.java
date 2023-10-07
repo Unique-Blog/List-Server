@@ -21,6 +21,8 @@ import java.io.IOException;
 @EnableWebSecurity
 public class SecurityConfig {
 
+
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -31,7 +33,7 @@ public class SecurityConfig {
         http
                 .cors()
                 .and()
-//                .csrf().disable()
+                .csrf().disable()
 
                 .authorizeRequests()
                 .anyRequest().permitAll();

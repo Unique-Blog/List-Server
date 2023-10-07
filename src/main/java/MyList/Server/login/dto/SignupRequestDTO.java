@@ -9,7 +9,6 @@ import lombok.Data;
 @Data
 public class SignupRequestDTO {
 
-    private String userName;
     private String userId;
     private String userPw;
 
@@ -21,7 +20,6 @@ public class SignupRequestDTO {
     public Member of(){
         return Member.builder()
                 .userId(userId)
-                .userName(userName)
                 .userPw(userPw)
                 .build();
     }
