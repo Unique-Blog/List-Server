@@ -4,10 +4,6 @@ import MyList.Server.login.dto.SignupRequestDTO;
 import MyList.Server.login.entity.Member;
 import MyList.Server.login.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

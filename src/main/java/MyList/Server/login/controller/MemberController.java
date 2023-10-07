@@ -15,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -26,8 +26,6 @@ public class MemberController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private PrincipalDetailsService principalDetailsService;
-
-
 
     @GetMapping({"", "/"})
     public String getIndex(){
@@ -43,7 +41,6 @@ public class MemberController {
         memberService.userSignup(signupRequestDTO);
         return ResponseEntity.ok("회원가입이 완료되었습니다.");
     }
-
 
     @GetMapping("/user/login")
     public ResponseEntity<String> loginForm(@RequestBody Member member){
