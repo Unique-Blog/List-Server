@@ -51,7 +51,6 @@ public class TodoListService {
             completedTodoListRepository.save(completedTodoList);
 
             todoList.setCompleted(true); // summaryCode 객체에서 스크랩 여부를 YES로 변경
-            System.out.println("\ntodoList(true) = " + todoList.getCompleted());
             todoListRepository.save(todoList);
             return todoList;
         }
@@ -65,7 +64,6 @@ public class TodoListService {
             completedTodoListRepository.delete(completedTodoList.get());
 
             todoList.setCompleted(false); // summaryCode 객체에서 스크랩 여부를 NO로 변경
-            System.out.println("\ntodoList2(false) = " + todoList.getCompleted());
             todoListRepository.save(todoList);
             return false;
         } else {
