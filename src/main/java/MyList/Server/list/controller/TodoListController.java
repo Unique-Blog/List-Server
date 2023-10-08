@@ -56,11 +56,12 @@ public class TodoListController {
     }
 
     @PostMapping("/todo/completed")
-    public ResponseEntity<String> completedTodoList(@RequestParam Long id) {
+    public ResponseEntity<List<TodoList>> completedTodoList(@RequestParam Long id) {
 
-        todoListService.save_completedTodoList(id);
+        TodoList todoList = todoListService.save_completedTodoList(id);
+        List<TodoList> allListTodo = todoListService.searchAll(todoList.getUserId());
         return ResponseEntity.ok()
-                .body("좋아요를 누른 글을 성공적으로 저장했습니다.");
+                .body(allListTodo);
     }
 
 

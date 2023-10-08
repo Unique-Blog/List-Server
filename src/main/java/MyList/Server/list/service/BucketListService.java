@@ -39,7 +39,7 @@ public class BucketListService {
     }
 
     @Transactional
-    public void save_completedBucketList(Long id) {
+    public BucketList save_completedBucketList(Long id) {
         BucketList bucketList = bucketListRepository.findBucketListById(id).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 summaryCode가 존재하지 않습니다."));
 
@@ -55,6 +55,7 @@ public class BucketListService {
             bucketList.setCompleted(true); // summaryCode 객체에서 스크랩 여부를 YES로 변경
             bucketListRepository.save(bucketList);
         }
+        return bucketList;
     }
 
     private boolean delete_completedTodoList(Long id, BucketList bucketList) {

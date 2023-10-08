@@ -36,7 +36,7 @@ public class TodoListService {
     }
 
     @Transactional
-    public void save_completedTodoList(Long id) {
+    public TodoList save_completedTodoList(Long id) {
         TodoList todoList = todoListRepository.findTodoListById(id).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 summaryCode가 존재하지 않습니다."));
 
@@ -52,6 +52,7 @@ public class TodoListService {
             todoList.setCompleted(true); // summaryCode 객체에서 스크랩 여부를 YES로 변경
             todoListRepository.save(todoList);
         }
+        return todoList;
     }
 
     private boolean delete_completedTodoList(Long id, TodoList todoList) {
