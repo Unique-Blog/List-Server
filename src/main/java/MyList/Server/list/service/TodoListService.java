@@ -29,6 +29,7 @@ public class TodoListService {
         TodoList todoList = TodoList.builder()
                 .content(todoListRequestDTO.getContent())
                 .completed(todoListRequestDTO.getCompleted())
+                .createdAt(LocalDateTime.now())
                 .userId(todoListRequestDTO.getUserId())
                 .build();
         return this.todoListRepository.save(todoList);
@@ -44,6 +45,7 @@ public class TodoListService {
             CompletedTodoList completedTodoList = CompletedTodoList.builder() // scrapSummaryCodeRepository에 저장
                     .completed(todoList.getCompleted())
                     .content(todoList.getContent())
+                    .createdAt(todoList.getCreatedAt())
                     .userId(todoList.getUserId())
                     .build();
             completedTodoListRepository.save(completedTodoList);

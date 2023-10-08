@@ -30,6 +30,7 @@ public class BucketListService {
         BucketList bucketList = BucketList.builder()
                 .content(bucketListRequestDTO.getContent())
                 .completed(bucketListRequestDTO.getCompleted())
+                .createdAt(LocalDateTime.now())
                 .userId(bucketListRequestDTO.getUserId())
                 .build();
         return this.bucketListRepository.save(bucketList);
@@ -45,6 +46,7 @@ public class BucketListService {
             CompletedBucketList completedBucketList = CompletedBucketList.builder() // scrapSummaryCodeRepository에 저장
                     .completed(bucketList.getCompleted())
                     .content(bucketList.getContent())
+                    .createdAt(bucketList.getCreatedAt())
                     .userId(bucketList.getUserId())
                     .build();
             completedBucketListRepository.save(completedBucketList);
