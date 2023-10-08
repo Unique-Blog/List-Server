@@ -29,7 +29,7 @@ public class TodoListController {
 
     @RequestMapping(value = "/todo/save", method = RequestMethod.POST)
     public ResponseEntity<List<TodoList>> saveTodo(@RequestBody TodoListRequestDTO todoListRequestDTO) {
-        if(todoListRequestDTO.getContent() == "" || todoListRequestDTO.getContent() == " "){
+        if(todoListRequestDTO.getContent().equals("")|| todoListRequestDTO.getContent().equals(" ")){
             throw new CustomException(HttpStatus.BAD_REQUEST, "글이 없습니다.");
         }
         System.out.println("saveTodo = " + todoListRequestDTO);

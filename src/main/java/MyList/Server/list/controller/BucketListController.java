@@ -26,7 +26,7 @@ public class BucketListController {
 
     @RequestMapping(value = "/bucket/save", method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> saveBucket(@RequestBody BucketListRequestDTO bucketListRequestDTO) {
-        if(bucketListRequestDTO.getContent() == "" || bucketListRequestDTO.getContent() == " "){
+        if(bucketListRequestDTO.getContent().equals("")|| bucketListRequestDTO.getContent().equals(" ")){
             throw new CustomException(HttpStatus.BAD_REQUEST, "글이 없습니다.");
         }
         System.out.println("saveBucket = " + bucketListRequestDTO);
