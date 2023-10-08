@@ -1,10 +1,12 @@
 package MyList.Server.list.controller;
 
+import MyList.Server.exception.CustomException;
 import MyList.Server.list.dto.response.TodoListResponseDTO;
 import MyList.Server.list.dto.request.TodoListRequestDTO;
 import MyList.Server.list.entity.TodoList;
 import MyList.Server.list.service.TodoListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,9 @@ public class TodoListController {
 
     @RequestMapping(value = "/todo/save", method = RequestMethod.POST)
     public ResponseEntity<List<TodoList>> saveTodo(@RequestBody TodoListRequestDTO todoListRequestDTO) {
+        if(todoListRequestDTO.getContent() == null){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "글이 없습니다.");
+        }
         System.out.println("saveTodo = " + todoListRequestDTO);
         todoListService.add(todoListRequestDTO);
         List<TodoList> allListTodo = todoListService.searchAll(todoListRequestDTO.getUserId());

@@ -1,10 +1,12 @@
 package MyList.Server.list.controller;
 
+import MyList.Server.exception.CustomException;
 import MyList.Server.list.dto.request.BucketListRequestDTO;
 import MyList.Server.list.dto.response.BucketListResponseDTO;
 import MyList.Server.list.entity.BucketList;
 import MyList.Server.list.service.BucketListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,9 @@ public class BucketListController {
 
     @RequestMapping(value = "/bucket/search",method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> searchBucket(@RequestBody BucketListRequestDTO bucketListRequestDTO){
+        if(bucketListRequestDTO.getContent() == null){
+            throw new CustomException(HttpStatus.BAD_REQUEST, "글이 없습니다.");
+        }
         System.out.println("searchBucket = " + bucketListRequestDTO);
         List<BucketList> allListTodo = bucketListService.searchAll(bucketListRequestDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
