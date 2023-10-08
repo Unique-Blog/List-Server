@@ -26,11 +26,9 @@ public class MemberService implements UserDetailsService {
     @Transactional
     public Member userSignup(SignupRequestDTO signupRequestDTO){
         Member member = signupRequestDTO.of();
+        System.out.println("member = " + member);
         checkDuplication(signupRequestDTO.of());
         memberRepository.save(member);
-
-        System.out.println("회원가입");
-        System.out.println("member = " + member);
         return member;
     }
 

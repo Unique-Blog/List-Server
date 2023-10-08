@@ -19,7 +19,7 @@ public class BucketList {
     private Long id;
     @Column(length = 500)
     private String content;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TINYINT(1) default 0")
     private Boolean completed;
     @Column(name = "user_id")
     private String userId;
