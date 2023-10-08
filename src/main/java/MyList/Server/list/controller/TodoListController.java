@@ -4,6 +4,8 @@ import MyList.Server.exception.CustomException;
 import MyList.Server.list.dto.response.TodoListResponseDTO;
 import MyList.Server.list.dto.request.TodoListRequestDTO;
 import MyList.Server.list.entity.BucketList;
+import MyList.Server.list.entity.CompletedPercentage;
+import MyList.Server.list.entity.CompletedTodoList;
 import MyList.Server.list.entity.TodoList;
 import MyList.Server.list.service.TodoListService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @RestController
@@ -23,10 +27,17 @@ public class TodoListController {
 
     @Async
     @RequestMapping(value = "/todo/search",method = RequestMethod.POST)
-    public ResponseEntity<List<TodoList>> searchTodo(@RequestBody TodoListRequestDTO todoListRequestDTO){
+    public ResponseEntity<CompletedPercentage> searchTodo(@RequestBody TodoListRequestDTO todoListRequestDTO){
         System.out.println("searchTodo = " + todoListRequestDTO);
+
         List<TodoList> allListTodo = todoListService.searchAll(todoListRequestDTO.getUserId());
-        return ResponseEntity.ok(allListTodo);
+        List<CompletedTodoList> completedTodo = todoListService.searchCompleted(todoListRequestDTO.getUserId());
+
+        double percentage = todoListService.completedPercentage(allListTodo, completedTodo);
+
+        CompletedPercentage completedPercentage = new CompletedPercentage(allListTodo, percentage);
+
+        return ResponseEntity.ok(completedPercentage);
     }
 
     @RequestMapping(value = "/todo/save", method = RequestMethod.POST)

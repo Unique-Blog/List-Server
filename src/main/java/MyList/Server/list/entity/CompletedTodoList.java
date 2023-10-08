@@ -19,9 +19,6 @@ public class CompletedTodoList {
     @Column(length = 500)
     private String content;
 
-    @Column(nullable = false)
-    private Boolean completed;
-
     @Column(name = "user_id")
     private String userId;
 

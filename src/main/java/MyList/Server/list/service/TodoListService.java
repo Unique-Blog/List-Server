@@ -43,7 +43,6 @@ public class TodoListService {
         if (delete_completedTodoList(todoList.getCreatedAt(),todoList)) {// scrap을 한번 더 누르면 DB에 존재하는지 확인한 뒤, 삭제하고 return false
 
             CompletedTodoList completedTodoList = CompletedTodoList.builder() // scrapSummaryCodeRepository에 저장
-                    .completed(todoList.getCompleted())
                     .content(todoList.getContent())
                     .createdAt(todoList.getCreatedAt())
                     .userId(todoList.getUserId())
@@ -78,6 +77,11 @@ public class TodoListService {
     public List<TodoList> searchAll(String memberId){
         return this.todoListRepository.findAllByUserId(memberId);
     }
+
+    public List<CompletedTodoList> searchCompleted(String memberId){
+        return this.completedTodoListRepository.findAllByUserId(memberId);
+    }
+
     public TodoList updateById(TodoListResponseDTO todoListResponseDTO){
         TodoList todoEntity = this.searchById(todoListResponseDTO.getId());
         if(todoListResponseDTO.getContent() != null){
@@ -93,6 +97,17 @@ public class TodoListService {
     }
     public void deleteAll(){
         this.todoListRepository.deleteAll();
+    }
+
+    public double completedPercentage(List<TodoList> allList, List<CompletedTodoList> completedList) {
+        int totalSize = allList.size();
+        int completedSize = completedList.size();
+
+        double completionPercentage = (double) completedSize / totalSize * 100.0;
+
+        System.out.println("completionPercentage = " + completionPercentage);
+
+        return completionPercentage;
     }
 }
 

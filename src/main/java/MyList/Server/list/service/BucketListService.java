@@ -44,7 +44,6 @@ public class BucketListService {
         if (delete_completedTodoList(bucketList.getCreatedAt(),bucketList)) {// scrap을 한번 더 누르면 DB에 존재하는지 확인한 뒤, 삭제하고 return false
 
             CompletedBucketList completedBucketList = CompletedBucketList.builder() // scrapSummaryCodeRepository에 저장
-                    .completed(bucketList.getCompleted())
                     .content(bucketList.getContent())
                     .createdAt(bucketList.getCreatedAt())
                     .userId(bucketList.getUserId())
@@ -93,6 +92,7 @@ public class BucketListService {
         }
         return this.bucketListRepository.save(bucketList);
     }
+
     public void deleteById(Long id){
         this.bucketListRepository.deleteById(id);
     }
