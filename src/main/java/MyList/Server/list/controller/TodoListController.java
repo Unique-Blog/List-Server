@@ -9,6 +9,7 @@ import MyList.Server.list.service.TodoListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class TodoListController {
 
     private final TodoListService todoListService;
 
+    @Async
     @RequestMapping(value = "/todo/search",method = RequestMethod.POST)
     public ResponseEntity<List<TodoList>> searchTodo(@RequestBody TodoListRequestDTO todoListRequestDTO){
         System.out.println("searchTodo = " + todoListRequestDTO);
@@ -29,7 +31,7 @@ public class TodoListController {
 
     @RequestMapping(value = "/todo/save", method = RequestMethod.POST)
     public ResponseEntity<List<TodoList>> saveTodo(@RequestBody TodoListRequestDTO todoListRequestDTO) {
-        if(todoListRequestDTO.getContent().equals("")|| todoListRequestDTO.getContent().equals(" ")){
+        if(todoListRequestDTO.getContent() == null || todoListRequestDTO.getContent().trim().isEmpty()){
             throw new CustomException(HttpStatus.BAD_REQUEST, "글이 없습니다.");
         }
         System.out.println("saveTodo = " + todoListRequestDTO);

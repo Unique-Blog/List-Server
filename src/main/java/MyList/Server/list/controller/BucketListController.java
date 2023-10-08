@@ -8,6 +8,7 @@ import MyList.Server.list.service.BucketListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class BucketListController {
     private final BucketListService bucketListService;
 
+    @Async
     @RequestMapping(value = "/bucket/search",method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> searchBucket(@RequestBody BucketListRequestDTO bucketListRequestDTO){
         System.out.println("searchBucket = " + bucketListRequestDTO);
@@ -26,7 +28,7 @@ public class BucketListController {
 
     @RequestMapping(value = "/bucket/save", method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> saveBucket(@RequestBody BucketListRequestDTO bucketListRequestDTO) {
-        if(bucketListRequestDTO.getContent().equals("")|| bucketListRequestDTO.getContent().equals(" ")){
+        if(bucketListRequestDTO.getContent() == null || bucketListRequestDTO.getContent().trim().isEmpty()){
             throw new CustomException(HttpStatus.BAD_REQUEST, "글이 없습니다.");
         }
         System.out.println("saveBucket = " + bucketListRequestDTO);
