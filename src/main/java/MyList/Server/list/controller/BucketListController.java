@@ -55,4 +55,12 @@ public class BucketListController {
         List<BucketList> allListTodo = bucketListService.searchAll(bucketListResponseDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }
+
+    @PostMapping("/bucket/completed")
+    public ResponseEntity<String> completedTodoList(@RequestParam Long id) {
+
+        bucketListService.save_completedBucketList(id);
+        return ResponseEntity.ok()
+                .body("좋아요를 누른 글을 성공적으로 저장했습니다.");
+    }
 }

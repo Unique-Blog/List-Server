@@ -40,7 +40,7 @@ public class TodoListService {
         TodoList todoList = todoListRepository.findTodoListById(id).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 summaryCode가 존재하지 않습니다."));
 
-        if (delete_scrapSummaryCode(todoList.getId(),todoList)) {// scrap을 한번 더 누르면 DB에 존재하는지 확인한 뒤, 삭제하고 return false
+        if (delete_completedTodoList(todoList.getId(),todoList)) {// scrap을 한번 더 누르면 DB에 존재하는지 확인한 뒤, 삭제하고 return false
 
             CompletedTodoList completedTodoList = CompletedTodoList.builder() // scrapSummaryCodeRepository에 저장
                     .completed(todoList.getCompleted())
@@ -54,7 +54,7 @@ public class TodoListService {
         }
     }
 
-    private boolean delete_scrapSummaryCode(Long id, TodoList todoList) {
+    private boolean delete_completedTodoList(Long id, TodoList todoList) {
         // localDateTime은 밀리초까지 나옴. 그래서 동일한 값이 없다고 판단 하에 검증 필드로 사용
         Optional<CompletedTodoList> completedTodoList = completedTodoListRepository.findCompletedTodoListById(id);
         if (completedTodoList.isPresent()) {

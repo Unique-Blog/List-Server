@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BucketListRepository extends JpaRepository<BucketList, Long> {
-    Optional<BucketList> findTodoListById(Long id);
+    Optional<BucketList> findBucketListById(Long id);
     List<BucketList> findAllByUserId(String userId);
 }
