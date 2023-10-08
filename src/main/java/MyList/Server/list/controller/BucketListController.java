@@ -2,8 +2,9 @@ package MyList.Server.list.controller;
 
 import MyList.Server.exception.CustomException;
 import MyList.Server.list.dto.request.BucketListRequestDTO;
+import MyList.Server.list.dto.request.TodoListRequestDTO;
 import MyList.Server.list.dto.response.BucketListResponseDTO;
-import MyList.Server.list.entity.BucketList;
+import MyList.Server.list.entity.*;
 import MyList.Server.list.service.BucketListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,17 @@ public class BucketListController {
 
     @Async
     @RequestMapping(value = "/bucket/search",method = RequestMethod.POST)
-    public ResponseEntity<List<BucketList>> searchBucket(@RequestBody BucketListRequestDTO bucketListRequestDTO){
+    public ResponseEntity<CompletedPercentage> searchBucket(@RequestBody BucketListRequestDTO bucketListRequestDTO){
         System.out.println("searchBucket = " + bucketListRequestDTO);
+
         List<BucketList> allListBucket = bucketListService.searchAll(bucketListRequestDTO.getUserId());
-        return ResponseEntity.ok(allListBucket);
+        List<CompletedBucketList> completedTodo = bucketListService.searchCompleted(bucketListRequestDTO.getUserId());
+
+        double percentage = bucketListService.completedPercentage(allListBucket, completedTodo);
+
+        CompletedPercentage completedPercentage = new CompletedPercentage(allListBucket, percentage);
+
+        return ResponseEntity.ok(completedPercentage);
     }
 
     @RequestMapping(value = "/bucket/save", method = RequestMethod.POST)

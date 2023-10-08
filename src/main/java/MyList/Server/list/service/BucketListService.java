@@ -5,6 +5,8 @@ import MyList.Server.list.dto.request.BucketListRequestDTO;
 import MyList.Server.list.dto.response.BucketListResponseDTO;
 import MyList.Server.list.entity.BucketList;
 import MyList.Server.list.entity.CompletedBucketList;
+import MyList.Server.list.entity.CompletedTodoList;
+import MyList.Server.list.entity.TodoList;
 import MyList.Server.list.repository.BucketListRepository;
 import MyList.Server.list.repository.CompletedBucketListRepository;
 import lombok.AllArgsConstructor;
@@ -81,6 +83,10 @@ public class BucketListService {
         return this.bucketListRepository.findAllByUserId(memberId);
     }
 
+    public List<CompletedBucketList> searchCompleted(String memberId){
+        return this.completedBucketListRepository.findAllByUserId(memberId);
+    }
+
 
     public BucketList updateById(BucketListResponseDTO bucketListResponseDTO){
         BucketList bucketList = this.searchById(bucketListResponseDTO.getId());
@@ -99,5 +105,16 @@ public class BucketListService {
 
     public void deleteAll(){
         this.bucketListRepository.deleteAll();
+    }
+
+    public double completedPercentage(List<BucketList> allList, List<CompletedBucketList> completedList) {
+        int totalSize = allList.size();
+        int completedSize = completedList.size();
+
+        double completionPercentage = (double) completedSize / totalSize * 100.0;
+
+        System.out.println("completionPercentage = " + completionPercentage);
+
+        return completionPercentage;
     }
 }

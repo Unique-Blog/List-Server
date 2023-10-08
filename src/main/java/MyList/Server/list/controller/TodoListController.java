@@ -80,6 +80,4 @@ public class TodoListController {
         return ResponseEntity.ok()
                 .body(allListTodo);
     }
-
-
 }

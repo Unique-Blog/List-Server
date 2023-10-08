@@ -87,9 +87,6 @@ public class TodoListService {
         if(todoListResponseDTO.getContent() != null){
             todoEntity.setContent(todoListResponseDTO.getContent());
         }
-        if(todoListResponseDTO.getCompleted() != null){
-            todoEntity.setCompleted(todoListResponseDTO.getCompleted());
-        }
         return this.todoListRepository.save(todoEntity);
     }
     public void deleteById(Long id){
