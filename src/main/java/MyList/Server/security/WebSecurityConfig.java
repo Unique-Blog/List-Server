@@ -10,7 +10,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://10.114.10.20:3001/","http://192.168.0.26:3000/") // 허용할 도메인(Origin)을 명시적으로 지정
+                .allowedOrigins("http://10.114.10.20:3000/","http://192.168.0.26:3000/") // 허용할 도메인(Origin)을 명시적으로 지정
                 .allowedHeaders("*")
 //                .exposedHeaders("accessToken", "refreshToken","validation")
                 .allowedMethods(
