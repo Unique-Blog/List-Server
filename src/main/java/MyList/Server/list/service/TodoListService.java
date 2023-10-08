@@ -8,7 +8,6 @@ import MyList.Server.list.entity.TodoList;
 import MyList.Server.list.repository.CompletedTodoListRepository;
 import MyList.Server.list.repository.TodoListRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +39,7 @@ public class TodoListService {
         TodoList todoList = todoListRepository.findTodoListById(id).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 summaryCode가 존재하지 않습니다."));
 
-        if (delete_completedTodoList(todoList.getId(),todoList)) {// scrap을 한번 더 누르면 DB에 존재하는지 확인한 뒤, 삭제하고 return false
+        if (delete_completedTodoList(todoList.getCreatedAt(),todoList)) {// scrap을 한번 더 누르면 DB에 존재하는지 확인한 뒤, 삭제하고 return false
 
             CompletedTodoList completedTodoList = CompletedTodoList.builder() // scrapSummaryCodeRepository에 저장
                     .completed(todoList.getCompleted())
@@ -50,18 +49,21 @@ public class TodoListService {
             completedTodoListRepository.save(completedTodoList);
 
             todoList.setCompleted(true); // summaryCode 객체에서 스크랩 여부를 YES로 변경
+            System.out.println("\ntodoList(true) = " + todoList.getCompleted());
             todoListRepository.save(todoList);
+            return todoList;
         }
         return todoList;
     }
 
-    private boolean delete_completedTodoList(Long id, TodoList todoList) {
+    private boolean delete_completedTodoList(LocalDateTime localDateTime, TodoList todoList) {
         // localDateTime은 밀리초까지 나옴. 그래서 동일한 값이 없다고 판단 하에 검증 필드로 사용
-        Optional<CompletedTodoList> completedTodoList = completedTodoListRepository.findCompletedTodoListById(id);
+        Optional<CompletedTodoList> completedTodoList = completedTodoListRepository.findCompletedTodoListByCreatedAt(localDateTime);
         if (completedTodoList.isPresent()) {
             completedTodoListRepository.delete(completedTodoList.get());
 
             todoList.setCompleted(false); // summaryCode 객체에서 스크랩 여부를 NO로 변경
+            System.out.println("\ntodoList2(false) = " + todoList.getCompleted());
             todoListRepository.save(todoList);
             return false;
         } else {

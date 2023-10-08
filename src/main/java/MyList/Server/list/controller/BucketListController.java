@@ -1,16 +1,11 @@
 package MyList.Server.list.controller;
 
 import MyList.Server.list.dto.request.BucketListRequestDTO;
-import MyList.Server.list.dto.request.TodoListRequestDTO;
 import MyList.Server.list.dto.response.BucketListResponseDTO;
 import MyList.Server.list.entity.BucketList;
-import MyList.Server.list.entity.TodoList;
 import MyList.Server.list.service.BucketListService;
-import MyList.Server.list.service.TodoListService;
-import MyList.Server.login.dto.MemberPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
