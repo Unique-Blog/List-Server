@@ -3,6 +3,7 @@ package MyList.Server.list.controller;
 import MyList.Server.exception.CustomException;
 import MyList.Server.list.dto.response.TodoListResponseDTO;
 import MyList.Server.list.dto.request.TodoListRequestDTO;
+import MyList.Server.list.entity.BucketList;
 import MyList.Server.list.entity.TodoList;
 import MyList.Server.list.service.TodoListService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class TodoListController {
 
     @RequestMapping(value = "/todo/save", method = RequestMethod.POST)
     public ResponseEntity<List<TodoList>> saveTodo(@RequestBody TodoListRequestDTO todoListRequestDTO) {
-        if(todoListRequestDTO.getContent() == null){
+        if(todoListRequestDTO.getContent() == "" || todoListRequestDTO.getContent() == " "){
             throw new CustomException(HttpStatus.BAD_REQUEST, "글이 없습니다.");
         }
         System.out.println("saveTodo = " + todoListRequestDTO);
