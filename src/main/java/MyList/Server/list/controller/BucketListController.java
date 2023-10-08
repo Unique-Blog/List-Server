@@ -22,14 +22,14 @@ public class BucketListController {
 
     @RequestMapping(value = "/bucket/search",method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> searchBucket(@RequestBody BucketListRequestDTO bucketListRequestDTO){
-        System.out.println("todoListRequestDTO = " + bucketListRequestDTO);
+        System.out.println("searchBucket = " + bucketListRequestDTO);
         List<BucketList> allListTodo = bucketListService.searchAll(bucketListRequestDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }
 
     @RequestMapping(value = "/bucket/save", method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> saveBucket(@RequestBody BucketListRequestDTO bucketListRequestDTO) {
-        System.out.println("todoListRequestDTO = " + bucketListRequestDTO);
+        System.out.println("saveBucket = " + bucketListRequestDTO);
         bucketListService.add(bucketListRequestDTO);
         List<BucketList> allListTodo = bucketListService.searchAll(bucketListRequestDTO.getUserId());
         return ResponseEntity.ok(allListTodo);

@@ -8,6 +8,7 @@ import MyList.Server.list.repository.BucketListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class BucketListService {
     @Autowired
     private BucketListRepository bucketListRepository;
 
+    @Transactional
     public BucketList add(BucketListRequestDTO bucketListRequestDTO){
         BucketList bucketList = BucketList.builder()
                 .content(bucketListRequestDTO.getContent())
@@ -31,9 +33,13 @@ public class BucketListService {
         return this.bucketListRepository.findTodoListById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
+
+
     public List<BucketList> searchAll(String memberId){
         return this.bucketListRepository.findAllByUserId(memberId);
     }
+
+
     public BucketList updateById(BucketListResponseDTO bucketListResponseDTO){
         BucketList bucketList = this.searchById(bucketListResponseDTO.getId());
         if(bucketListResponseDTO.getContent() != null){
@@ -47,6 +53,7 @@ public class BucketListService {
     public void deleteById(Long id){
         this.bucketListRepository.deleteById(id);
     }
+
     public void deleteAll(){
         this.bucketListRepository.deleteAll();
     }

@@ -21,14 +21,14 @@ public class TodoListController {
 
     @RequestMapping(value = "/todo/search",method = RequestMethod.POST)
     public ResponseEntity<List<TodoList>> searchTodo(@RequestBody TodoListRequestDTO todoListRequestDTO){
-        System.out.println("todoListRequestDTO = " + todoListRequestDTO);
+        System.out.println("searchTodo = " + todoListRequestDTO);
         List<TodoList> allListTodo = todoListService.searchAll(todoListRequestDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }
 
     @RequestMapping(value = "/todo/save", method = RequestMethod.POST)
     public ResponseEntity<List<TodoList>> saveTodo(@RequestBody TodoListRequestDTO todoListRequestDTO) {
-        System.out.println("todoListRequestDTO = " + todoListRequestDTO);
+        System.out.println("saveTodo = " + todoListRequestDTO);
         todoListService.add(todoListRequestDTO);
         List<TodoList> allListTodo = todoListService.searchAll(todoListRequestDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
@@ -53,6 +53,14 @@ public class TodoListController {
         todoListService.deleteAll();
         List<TodoList> allListTodo = todoListService.searchAll(todoListResponseDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
+    }
+
+    @PostMapping("/todo/completed")
+    public ResponseEntity<String> completedTodoList(@RequestParam Long id) {
+
+        todoListService.save_completedTodoList(id);
+        return ResponseEntity.ok()
+                .body("좋아요를 누른 글을 성공적으로 저장했습니다.");
     }
 
 
