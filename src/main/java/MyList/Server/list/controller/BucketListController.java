@@ -2,7 +2,6 @@ package MyList.Server.list.controller;
 
 import MyList.Server.exception.CustomException;
 import MyList.Server.list.dto.request.BucketListRequestDTO;
-import MyList.Server.list.dto.request.TodoListRequestDTO;
 import MyList.Server.list.dto.response.BucketListResponseDTO;
 import MyList.Server.list.entity.*;
 import MyList.Server.list.service.BucketListService;
@@ -47,14 +46,14 @@ public class BucketListController {
 
     @RequestMapping(value = "/bucket/update/",method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> updateBucket(@RequestBody BucketListResponseDTO bucketListResponseDTO) {
-        bucketListService.updateById(bucketListResponseDTO);
+        bucketListService.updateBucketList(bucketListResponseDTO);
         List<BucketList> allListBucket = bucketListService.searchAll(bucketListResponseDTO.getUserId());
         return ResponseEntity.ok(allListBucket);
     }
 
     @RequestMapping(value = "/bucket/delete/",method = RequestMethod.DELETE)
     public ResponseEntity<List<BucketList>> deleteBucket(@RequestBody BucketListResponseDTO bucketListResponseDTO) {
-        bucketListService.deleteById(bucketListResponseDTO.getId());
+        bucketListService.deleteBucketList(bucketListResponseDTO.getId());
         List<BucketList> allListBucket = bucketListService.searchAll(bucketListResponseDTO.getUserId());
         return ResponseEntity.ok(allListBucket);
     }

@@ -5,8 +5,6 @@ import MyList.Server.list.dto.request.BucketListRequestDTO;
 import MyList.Server.list.dto.response.BucketListResponseDTO;
 import MyList.Server.list.entity.BucketList;
 import MyList.Server.list.entity.CompletedBucketList;
-import MyList.Server.list.entity.CompletedTodoList;
-import MyList.Server.list.entity.TodoList;
 import MyList.Server.list.repository.BucketListRepository;
 import MyList.Server.list.repository.CompletedBucketListRepository;
 import lombok.AllArgsConstructor;
@@ -73,7 +71,7 @@ public class BucketListService {
         }
     }
 
-    public  BucketList searchById(Long id){
+    public  BucketList searchBucketList(Long id){
         return this.bucketListRepository.findBucketListById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -88,8 +86,8 @@ public class BucketListService {
     }
 
 
-    public BucketList updateById(BucketListResponseDTO bucketListResponseDTO){
-        BucketList bucketList = this.searchById(bucketListResponseDTO.getId());
+    public BucketList updateBucketList(BucketListResponseDTO bucketListResponseDTO){
+        BucketList bucketList = this.searchBucketList(bucketListResponseDTO.getId());
         if(bucketListResponseDTO.getContent() != null){
             bucketList.setContent(bucketListResponseDTO.getContent());
         }
@@ -99,7 +97,8 @@ public class BucketListService {
         return this.bucketListRepository.save(bucketList);
     }
 
-    public void deleteById(Long id){
+    @Transactional
+    public void deleteBucketList(Long id){
         BucketList bucketList = bucketListRepository.findBucketListById(id).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 BucketList 존재하지 않습니다."));
         this.bucketListRepository.deleteBucketListByCreatedAt(bucketList.getCreatedAt());

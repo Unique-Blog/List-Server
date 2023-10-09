@@ -3,7 +3,6 @@ package MyList.Server.list.controller;
 import MyList.Server.exception.CustomException;
 import MyList.Server.list.dto.response.TodoListResponseDTO;
 import MyList.Server.list.dto.request.TodoListRequestDTO;
-import MyList.Server.list.entity.BucketList;
 import MyList.Server.list.entity.CompletedPercentage;
 import MyList.Server.list.entity.CompletedTodoList;
 import MyList.Server.list.entity.TodoList;
@@ -11,12 +10,9 @@ import MyList.Server.list.service.TodoListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 @RestController
@@ -52,14 +48,14 @@ public class TodoListController {
 
     @RequestMapping(value = "/todo/update",method = RequestMethod.POST)
     public ResponseEntity<List<TodoList>> updateTodo(@RequestBody TodoListResponseDTO todoListResponseDTO) {
-        todoListService.updateById(todoListResponseDTO);
+        todoListService.updateTodoList(todoListResponseDTO);
         List<TodoList> allListTodo = todoListService.searchAll(todoListResponseDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }
 
     @RequestMapping(value = "/todo/delete",method = RequestMethod.DELETE)
     public ResponseEntity<List<TodoList>> deleteTodo(@RequestBody TodoListResponseDTO todoListResponseDTO) {
-        todoListService.deleteById(todoListResponseDTO.getId());
+        todoListService.deleteTodoList(todoListResponseDTO.getId());
         List<TodoList> allListTodo = todoListService.searchAll(todoListResponseDTO.getUserId());
         return ResponseEntity.ok(allListTodo);
     }

@@ -70,7 +70,7 @@ public class TodoListService {
         }
     }
 
-    public  TodoList searchById(Long id) {
+    public  TodoList searchTodoList(Long id) {
         return this.todoListRepository.findTodoListById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -82,14 +82,16 @@ public class TodoListService {
         return this.completedTodoListRepository.findAllByUserId(memberId);
     }
 
-    public TodoList updateById(TodoListResponseDTO todoListResponseDTO){
-        TodoList todoEntity = this.searchById(todoListResponseDTO.getId());
+    public TodoList updateTodoList(TodoListResponseDTO todoListResponseDTO){
+        TodoList todoEntity = this.searchTodoList(todoListResponseDTO.getId());
         if(todoListResponseDTO.getContent() != null){
             todoEntity.setContent(todoListResponseDTO.getContent());
         }
         return this.todoListRepository.save(todoEntity);
     }
-    public void deleteById(Long id){
+
+    @Transactional
+    public void deleteTodoList(Long id){
         TodoList todoList = todoListRepository.findTodoListById(id).orElseThrow(
                 () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 TodoList가 존재하지 않습니다."));
         this.todoListRepository.deleteTodoListByCreatedAt(todoList.getCreatedAt());
