@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface CompletedBucketListRepository extends JpaRepository<CompletedBucketList, Long> {
     Optional<CompletedBucketList> findCompletedBucketListByCreatedAt(LocalDateTime localDateTime);
 
+    Optional<CompletedBucketList> deleteCompletedBucketListByCreatedAt(LocalDateTime localDateTime);
+
     List<CompletedBucketList> findAllByUserId(String userId);
 }

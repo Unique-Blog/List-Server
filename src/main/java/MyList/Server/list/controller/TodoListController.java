@@ -25,7 +25,6 @@ public class TodoListController {
 
     private final TodoListService todoListService;
 
-    @Async
     @RequestMapping(value = "/todo/search",method = RequestMethod.POST)
     public ResponseEntity<CompletedPercentage> searchTodo(@RequestBody TodoListRequestDTO todoListRequestDTO){
         System.out.println("searchTodo = " + todoListRequestDTO);

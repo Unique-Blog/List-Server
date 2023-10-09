@@ -41,7 +41,7 @@ public class BucketListService {
     @Transactional
     public BucketList save_completedBucketList(Long id) {
         BucketList bucketList = bucketListRepository.findBucketListById(id).orElseThrow(
-                () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 summaryCode가 존재하지 않습니다."));
+                () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 BucketList 존재하지 않습니다."));
 
         if (delete_completedTodoList(bucketList.getCreatedAt(),bucketList)) {// scrap을 한번 더 누르면 DB에 존재하는지 확인한 뒤, 삭제하고 return false
 
@@ -100,12 +100,17 @@ public class BucketListService {
     }
 
     public void deleteById(Long id){
-        this.bucketListRepository.deleteById(id);
+        BucketList bucketList = bucketListRepository.findBucketListById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 BucketList 존재하지 않습니다."));
+        this.bucketListRepository.deleteBucketListByCreatedAt(bucketList.getCreatedAt());
+        this.completedBucketListRepository.deleteCompletedBucketListByCreatedAt(bucketList.getCreatedAt());
     }
 
     public void deleteAll(){
         this.bucketListRepository.deleteAll();
+        this.completedBucketListRepository.deleteAll();
     }
+
 
     public double completedPercentage(List<BucketList> allList, List<CompletedBucketList> completedList) {
         int totalSize = allList.size();

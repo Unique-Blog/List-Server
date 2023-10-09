@@ -38,7 +38,7 @@ public class TodoListService {
     @Transactional
     public TodoList save_completedTodoList(Long id) {
         TodoList todoList = todoListRepository.findTodoListById(id).orElseThrow(
-                () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 summaryCode가 존재하지 않습니다."));
+                () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 TodoList가 존재하지 않습니다."));
 
         if (delete_completedTodoList(todoList.getCreatedAt(),todoList)) {// scrap을 한번 더 누르면 DB에 존재하는지 확인한 뒤, 삭제하고 return false
 
@@ -90,10 +90,15 @@ public class TodoListService {
         return this.todoListRepository.save(todoEntity);
     }
     public void deleteById(Long id){
-        this.todoListRepository.deleteById(id);
+        TodoList todoList = todoListRepository.findTodoListById(id).orElseThrow(
+                () -> new CustomException(HttpStatus.NOT_FOUND, "id값에 맞는 TodoList가 존재하지 않습니다."));
+        this.todoListRepository.deleteTodoListByCreatedAt(todoList.getCreatedAt());
+        this.completedTodoListRepository.deleteTodoListByCreatedAt(todoList.getCreatedAt());
+
     }
     public void deleteAll(){
         this.todoListRepository.deleteAll();
+        this.completedTodoListRepository.deleteAll();
     }
 
     public double completedPercentage(List<TodoList> allList, List<CompletedTodoList> completedList) {
