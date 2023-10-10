@@ -44,14 +44,14 @@ public class BucketListController {
         return ResponseEntity.ok(allListBucket);
     }
 
-    @RequestMapping(value = "/bucket/update/",method = RequestMethod.POST)
+    @RequestMapping(value = "/bucket/update",method = RequestMethod.POST)
     public ResponseEntity<List<BucketList>> updateBucket(@RequestBody BucketListResponseDTO bucketListResponseDTO) {
         bucketListService.updateBucketList(bucketListResponseDTO);
         List<BucketList> allListBucket = bucketListService.searchAll(bucketListResponseDTO.getUserId());
         return ResponseEntity.ok(allListBucket);
     }
 
-    @RequestMapping(value = "/bucket/delete/",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/bucket/delete",method = RequestMethod.DELETE)
     public ResponseEntity<List<BucketList>> deleteBucket(@RequestBody BucketListResponseDTO bucketListResponseDTO) {
         bucketListService.deleteBucketList(bucketListResponseDTO.getId());
         List<BucketList> allListBucket = bucketListService.searchAll(bucketListResponseDTO.getUserId());
